@@ -1,0 +1,3 @@
+[submodule "numerical-mooc"]
+	path = numerical-mooc
+	url = https://github.com/numerical-mooc/numerical-mooc
