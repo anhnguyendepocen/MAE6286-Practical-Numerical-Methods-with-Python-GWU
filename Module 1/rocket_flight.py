@@ -11,16 +11,17 @@ A = numpy.pi * r**2             # maximum cross-sectional area of the rocket in 
 v_e = 325.0                     # exhaust speed in m s^{-1}
 C_D = 0.15                      # drag coefficient --- or D/L if C_L=1
 
-### set initial conditions ###
-m_p0 = 100.0                    # initial mass of the rocket propellent in kg
-v0 = 0.0                        # start at rest
-h0 = 0.0                        # initial altitude
-
 ### solution parameters
 dt = 0.1                        # time step in s
 T = 40                          # final time
 N = int(T/dt) + 1               # number of time steps
 t = numpy.linspace(0, T, N)     # time discretization
+
+### set initial conditions ###
+m_p = numpy.zeros(N)
+m_p[0] = 100.0                  # initial mass of the rocket propellent in kg
+v0 = 0.0                        # start at rest
+h0 = 0.0                        # initial altitude
 
 # Propellent burn rate in kg s^{-1}
 mp_dot = numpy.zeros(N)
@@ -28,13 +29,8 @@ n5 = int(5/dt)
 mp_dot[:n5] = 20.0
 
 # Compute m_p as a function of time
-m_p = numpy.zeros(N)
-for i in range(N):
-    if i < n5:
-        integral = mp_dot[i]*dt*i
-    else:
-        integral = mp_dot[0]*n5*dt
-    m_p[i] = m_p0 - integral
+for i in range(N-1):
+    m_p[i+1] = m_p[i] -dt*mp_dot[i]
 
 def f(u, t):
     """Returns the right-hand side of the system of equations.
