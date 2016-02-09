@@ -32,14 +32,13 @@ def plot_3D(x, y, p, elev=30, azi=45):
     fig = pyplot.figure(figsize=(11,7), dpi=100)
     ax = fig.gca(projection='3d')
     X,Y = numpy.meshgrid(x,y)
-    surf = ax.plot_surface(X,Y,p[:], rstride=1, cstride=1, cmap=cm.coolwarm,
+    surf = ax.plot_surface(X,Y,p[:], rstride=1, cstride=1, cmap=cm.viridis,
             linewidth=0, antialiased=False)
 
     ax.set_xlabel('$x$')
     ax.set_ylabel('$y$')
     ax.set_zlabel('$z$')
     ax.view_init(elev,azi)
-    return fig
 
 def p_analytical(x, y):
     '''Returns the analytical solution for the given Laplace Problem on a grid
